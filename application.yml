@@ -1,8 +1,15 @@
 eureka:
+    password: password
     client:
-        register-with-eureka: true
-        fetch-registry: true
-        service-url:
-            defaultZone: http://localhost:8761/eureka
+        serviceUrl:
+            defaultZone: http://user:${eureka.password}@localhost:8761/eureka/
     instance:
-        hostname: localhost
+        leaseRenewalIntervalInSeconds: 10
+        metadataMap:
+            instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+
+
+endpoints:
+    restart:
+        enabled: true
+
